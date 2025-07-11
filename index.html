@@ -13,9 +13,10 @@
         
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0a0a0a;
             color: white;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
         
         .container {
@@ -24,15 +25,17 @@
             padding: 0 20px;
         }
         
+        /* Header with glassmorphism */
         header {
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(20px);
             padding: 20px 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
             transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0,255,136,0.1);
         }
         
         .header-content {
@@ -44,15 +47,18 @@
         .logo {
             font-size: 28px;
             font-weight: bold;
-            color: #00ff88;
-            text-shadow: 0 0 20px rgba(0,255,136,0.5);
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(0,255,136,0.5);
             cursor: pointer;
             transition: all 0.3s ease;
         }
         
         .logo:hover {
             transform: scale(1.1);
-            text-shadow: 0 0 30px rgba(0,255,136,0.8);
+            filter: drop-shadow(0 0 20px rgba(0,255,136,0.8));
         }
         
         nav ul {
@@ -65,10 +71,11 @@
             color: white;
             text-decoration: none;
             transition: all 0.3s ease;
-            padding: 10px 20px;
-            border-radius: 25px;
+            padding: 12px 24px;
+            border-radius: 30px;
             position: relative;
             overflow: hidden;
+            font-weight: 500;
         }
         
         nav a::before {
@@ -78,7 +85,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(0,255,136,0.2), transparent);
             transition: left 0.5s ease;
         }
         
@@ -87,10 +94,12 @@
         }
         
         nav a:hover {
-            background: rgba(255,255,255,0.2);
+            background: rgba(0,255,136,0.1);
             transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,255,136,0.2);
         }
         
+        /* Hero Section with animated background */
         .hero {
             height: 100vh;
             display: flex;
@@ -98,35 +107,93 @@
             justify-content: center;
             text-align: center;
             position: relative;
-            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f093fb, #667eea);
+            background: linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e, #0f0f23);
             background-size: 400% 400%;
-            animation: gradientShift 8s ease infinite;
+            animation: gradientFlow 15s ease infinite;
         }
         
-        @keyframes gradientShift {
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(0,255,136,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(0,212,255,0.1) 0%, transparent 50%);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(0,255,136,0.6);
+            border-radius: 50%;
+            animation: floatParticle 8s linear infinite;
+        }
+        
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes gradientFlow {
             0% { background-position: 0% 50%; }
-            25% { background-position: 100% 50%; }
-            50% { background-position: 100% 100%; }
-            75% { background-position: 50% 100%; }
+            50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
         
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
         .hero-content h1 {
-            font-size: 4rem;
+            font-size: 5rem;
             margin-bottom: 20px;
-            text-shadow: 0 0 30px rgba(255,255,255,0.5);
-            animation: fadeInUp 1s ease;
+            background: linear-gradient(45deg, #00ff88, #00d4ff, #ff6b6b, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease, textGlow 3s ease infinite;
+        }
+        
+        @keyframes textGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(0,255,136,0.5)); }
+            50% { filter: drop-shadow(0 0 40px rgba(0,212,255,0.8)); }
         }
         
         .hero-content .founder-name {
-            font-size: 1.8rem;
-            color: #00ff88;
-            margin-bottom: 10px;
+            font-size: 2rem;
+            background: linear-gradient(45deg, #00d4ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
             animation: fadeInUp 1s ease 0.2s both;
         }
         
         .hero-content p {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin-bottom: 30px;
             opacity: 0.9;
             animation: fadeInUp 1s ease 0.3s both;
@@ -135,18 +202,19 @@
         .cta-button {
             background: linear-gradient(45deg, #00ff88, #00d4ff);
             color: white;
-            padding: 15px 40px;
+            padding: 18px 45px;
             border: none;
-            border-radius: 30px;
-            font-size: 1.2rem;
+            border-radius: 50px;
+            font-size: 1.3rem;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             text-decoration: none;
             display: inline-block;
             animation: fadeInUp 1s ease 0.6s both;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,255,136,0.3);
         }
         
         .cta-button::before {
@@ -156,8 +224,8 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s ease;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
         }
         
         .cta-button:hover::before {
@@ -165,8 +233,8 @@
         }
         
         .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,255,136,0.3);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(0,255,136,0.5);
         }
         
         @keyframes fadeInUp {
@@ -180,10 +248,11 @@
             }
         }
         
+        /* Services Section */
         .services {
-            padding: 100px 0;
+            padding: 120px 0;
+            background: linear-gradient(135deg, #0f0f23, #1a1a2e, #16213e);
             position: relative;
-            overflow: hidden;
         }
         
         .services::before {
@@ -193,42 +262,83 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, #1e3c72, #2a5298, #667eea, #764ba2);
-            background-size: 400% 400%;
-            animation: gradientShift 12s ease infinite;
-            opacity: 0.8;
-            z-index: -1;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(0,255,136,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .services .container {
+            position: relative;
+            z-index: 1;
         }
         
         .services h2 {
             text-align: center;
-            font-size: 3rem;
-            margin-bottom: 60px;
-            color: #00ff88;
+            font-size: 3.5rem;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             position: relative;
-            z-index: 1;
+        }
+        
+        .services h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            border-radius: 2px;
+        }
+        
+        /* Filter Buttons */
+        .service-filters {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .filter-btn {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0,255,136,0.2);
+            color: white;
+            padding: 12px 24px;
+            margin: 5px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            border-color: #00ff88;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,255,136,0.3);
         }
         
         .service-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            position: relative;
-            z-index: 1;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 40px;
         }
         
         .service-card {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(15px);
-            padding: 40px;
-            border-radius: 20px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(20px);
+            padding: 50px;
+            border-radius: 25px;
             text-align: center;
-            transition: all 0.5s ease;
-            border: 2px solid transparent;
+            transition: all 0.6s ease;
+            border: 2px solid rgba(0,255,136,0.1);
             position: relative;
             overflow: hidden;
-            opacity: 0;
-            transform: translateY(50px);
+            opacity: 1;
+            transform: translateY(0);
+            cursor: pointer;
         }
         
         .service-card::before {
@@ -238,42 +348,40 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(0,255,136,0.1), transparent);
-            transition: all 0.5s ease;
+            background: linear-gradient(45deg, rgba(0,255,136,0.1), rgba(0,212,255,0.1));
             opacity: 0;
+            transition: all 0.6s ease;
         }
         
         .service-card:hover::before {
             opacity: 1;
-            transform: rotate(45deg) scale(1.5);
-        }
-        
-        .service-card.animate {
-            opacity: 1;
-            transform: translateY(0);
         }
         
         .service-card:hover {
-            transform: translateY(-15px) scale(1.05);
-            box-shadow: 0 25px 60px rgba(0,255,136,0.2);
+            transform: translateY(-20px) scale(1.05);
+            box-shadow: 0 30px 80px rgba(0,255,136,0.3);
             border-color: #00ff88;
         }
         
         .service-card h3 {
-            color: #00ff88;
-            font-size: 1.8rem;
-            margin-bottom: 20px;
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2rem;
+            margin-bottom: 25px;
             position: relative;
             z-index: 1;
         }
         
         .service-card .price {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: bold;
             color: #00d4ff;
-            margin: 20px 0;
+            margin: 25px 0;
             position: relative;
             z-index: 1;
+            text-shadow: 0 0 20px rgba(0,212,255,0.5);
         }
         
         .service-card ul {
@@ -284,13 +392,14 @@
         }
         
         .service-card li {
-            padding: 10px 0;
+            padding: 15px 0;
             border-bottom: 1px solid rgba(255,255,255,0.1);
             transition: all 0.3s ease;
+            font-size: 1.1rem;
         }
         
         .service-card li:hover {
-            padding-left: 10px;
+            padding-left: 15px;
             color: #00ff88;
         }
         
@@ -298,102 +407,74 @@
             content: '✓';
             color: #00ff88;
             font-weight: bold;
-            margin-right: 10px;
+            margin-right: 15px;
+            font-size: 1.2rem;
         }
         
-        .about {
-            padding: 100px 0;
+        /* Contact Section */
+        .contact {
+            padding: 120px 0 60px 0;
+            background: linear-gradient(135deg, #0f0f23, #1a1a2e);
             text-align: center;
-            background: linear-gradient(45deg, #2c3e50, #3498db, #9b59b6, #e74c3c);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
             position: relative;
         }
         
-        .about::before {
+        .contact::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.3);
-            z-index: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(0,255,136,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
         }
         
-        .about .container {
+        .contact .container {
             position: relative;
             z-index: 1;
         }
         
-        .about h2 {
-            font-size: 3rem;
-            margin-bottom: 40px;
-            color: #00ff88;
-            animation: pulse 2s ease-in-out infinite alternate;
+        .contact h2 {
+            font-size: 3.5rem;
+            margin-bottom: 60px;
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
-        @keyframes pulse {
-            from { text-shadow: 0 0 20px rgba(0,255,136,0.5); }
-            to { text-shadow: 0 0 40px rgba(0,255,136,0.8); }
-        }
-        
-        .about p {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            max-width: 800px;
-            margin: 0 auto 40px;
+        .contact > .container > p {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
             opacity: 0.9;
         }
         
-        .founder-info {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 20px;
-            margin: 40px auto;
-            max-width: 600px;
-            border: 2px solid rgba(0,255,136,0.3);
-        }
-        
-        .founder-info h3 {
-            color: #00d4ff;
-            margin-bottom: 20px;
-            font-size: 2rem;
-        }
-        
-        .contact {
-            padding: 100px 0;
-            background: linear-gradient(45deg, #0f0c29, #302b63, #24243e, #0f0c29);
-            background-size: 400% 400%;
-            animation: gradientShift 20s ease infinite;
-            text-align: center;
-            position: relative;
-        }
-        
-        .contact h2 {
-            font-size: 3rem;
-            margin-bottom: 40px;
-            color: #00ff88;
-        }
-        
         .contact-info {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
         }
         
         .contact-item {
             background: rgba(255,255,255,0.1);
-            padding: 30px;
-            border-radius: 15px;
-            backdrop-filter: blur(15px);
-            transition: all 0.5s ease;
-            border: 2px solid transparent;
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            transition: all 0.6s ease;
+            border: 2px solid rgba(0,255,136,0.1);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .contact-item.whatsapp {
+            border-color: #25d366;
+            box-shadow: 0 0 20px rgba(37,211,102,0.4);
+        }
+        
+        .contact-item.whatsapp:hover {
+            box-shadow: 0 20px 40px rgba(37,211,102,0.6);
         }
         
         .contact-item::before {
@@ -403,8 +484,8 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0,212,255,0.2), transparent);
-            transition: left 0.5s ease;
+            background: linear-gradient(90deg, transparent, rgba(0,212,255,0.3), transparent);
+            transition: left 0.6s ease;
         }
         
         .contact-item:hover::before {
@@ -412,38 +493,70 @@
         }
         
         .contact-item:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 20px 50px rgba(0,212,255,0.3);
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 25px 60px rgba(0,212,255,0.4);
             border-color: #00d4ff;
         }
         
         .contact-item h4 {
-            color: #00d4ff;
-            margin-bottom: 10px;
-            font-size: 1.3rem;
+            background: linear-gradient(45deg, #00d4ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            position: relative;
+            z-index: 1;
         }
         
         .contact-item p {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
         }
         
+        /* Footer */
+        .footer {
+            background: #0a0a0a;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(0,255,136,0.1);
+        }
+        
+        .footer p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1rem;
+        }
+        
+        .footer .logo-footer {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        /* WhatsApp Float Button */
         .whatsapp-float {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background: #25d366;
+            background: linear-gradient(45deg, #25d366, #20c358);
             color: white;
             border-radius: 50%;
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 2rem;
             text-decoration: none;
-            box-shadow: 0 5px 20px rgba(37,211,102,0.3);
+            box-shadow: 0 10px 30px rgba(37,211,102,0.4);
             animation: bounce 2s ease-in-out infinite;
             z-index: 1000;
+            transition: all 0.3s ease;
         }
         
         @keyframes bounce {
@@ -459,21 +572,26 @@
         }
         
         .whatsapp-float:hover {
-            transform: scale(1.1);
-            box-shadow: 0 10px 30px rgba(37,211,102,0.5);
+            transform: scale(1.15);
+            box-shadow: 0 15px 40px rgba(37,211,102,0.6);
         }
         
+        /* Mobile Responsiveness */
         @media (max-width: 768px) {
             .hero-content h1 {
-                font-size: 2.5rem;
+                font-size: 3rem;
             }
             
             .hero-content p {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
             }
             
             .service-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .service-card {
+                padding: 30px;
             }
             
             nav ul {
@@ -482,23 +600,47 @@
             }
             
             .contact-info {
-                flex-direction: column;
-                align-items: center;
+                grid-template-columns: 1fr;
             }
+            
+            .services h2, .about h2, .contact h2 {
+                font-size: 2.5rem;
+            }
+            
+            .service-filters {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+        
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #00ff88, #00d4ff);
+            transform-origin: left;
+            z-index: 1001;
+            transform: scaleX(0);
         }
     </style>
 </head>
 <body>
+    <div class="scroll-indicator"></div>
+    
     <header>
         <div class="container">
             <div class="header-content">
-                <div class="logo" onclick="scrollToTop()">AutoFlow Solutions</div>
+                <div class="logo" onclick="scrollToSection('home')">AutoFlow Solutions</div>
                 <nav>
                     <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#services">Services</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#home" class="nav-link">Home</a></li>
+                        <li><a href="#services" class="nav-link">Services</a></li>
+                        <li><a href="#about" class="nav-link">About</a></li>
+                        <li><a href="#contact" class="nav-link">Contact</a></li>
                     </ul>
                 </nav>
             </div>
@@ -512,53 +654,147 @@
                 <div class="founder-name">Founded by Muhammad Ibraheem</div>
                 <p>Transform Your Business with AI-Powered Automation</p>
                 <p>24/7 Customer Service • Lead Generation • Business Growth</p>
-                <a href="#contact" class="cta-button">Get Started Today</a>
+                <a href="https://wa.me/923153387878?text=Hi! I'm interested in AutoFlow Solutions services!" class="cta-button">Get Started Today</a>
             </div>
         </div>
     </section>
 
     <section class="services" id="services">
         <div class="container">
-            <h2>Our Services</h2>
+            <h2>Our Premium Services</h2>
+            <div class="service-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="writing">Writing & Content</button>
+                <button class="filter-btn" data-filter="design">Design & Visual</button>
+                <button class="filter-btn" data-filter="coding">Coding & Development</button>
+                <button class="filter-btn" data-filter="data">Data & Analytics</button>
+                <button class="filter-btn" data-filter="automation">Automation & AI</button>
+                <button class="filter-btn" data-filter="business">Business Services</button>
+                <button class="filter-btn" data-filter="education">Educational & Training</button>
+                <button class="filter-btn" data-filter="creative">Creative Services</button>
+                <button class="filter-btn" data-filter="technical">Technical Services</button>
+                <button class="filter-btn" data-filter="marketing">Marketing & Sales</button>
+            </div>
             <div class="service-grid">
-                <div class="service-card" data-delay="0">
-                    <h3>Never Miss a Customer</h3>
-                    <div class="price">PKR 30,000 - 80,000</div>
+                <a href="https://wa.me/923153387878?text=I'm interested in your Writing & Content Services!" class="service-card" data-delay="0" data-category="writing">
+                    <h3>Writing & Content Services</h3>
+                    <div class="price">PKR 10,000 - 50,000</div>
                     <ul>
-                        <li>WhatsApp Business Bot</li>
-                        <li>Facebook Messenger Automation</li>
-                        <li>24/7 Customer Response</li>
-                        <li>Lead Collection System</li>
-                        <li>Basic FAQ Handling</li>
-                        <li>3 Months Support</li>
+                        <li>Professional CVs & Resumes</li>
+                        <li>Cover Letters & Job Applications</li>
+                        <li>Blog Posts & Articles</li>
+                        <li>Social Media Content</li>
+                        <li>Email Marketing Campaigns</li>
                     </ul>
-                </div>
+                </a>
                 
-                <div class="service-card" data-delay="200">
-                    <h3>24/7 Sales Assistant</h3>
-                    <div class="price">PKR 80,000 - 200,000</div>
+                <a href="https://wa.me/923153387878?text=I'm interested in your Design & Visual Services!" class="service-card" data-delay="200" data-category="design">
+                    <h3>Design & Visual Services</h3>
+                    <div class="price">PKR 20,000 - 100,000</div>
                     <ul>
-                        <li>Multi-Platform Integration</li>
-                        <li>Appointment Booking System</li>
-                        <li>Inventory Management Alerts</li>
-                        <li>Social Media Auto-Posting</li>
-                        <li>Advanced Analytics</li>
-                        <li>6 Months Support</li>
+                        <li>Logo Design & Branding</li>
+                        <li>Business Card Design</li>
+                        <li>Social Media Graphics</li>
+                        <li>Website Mockups</li>
+                        <li>Presentation Design</li>
                     </ul>
-                </div>
+                </a>
                 
-                <div class="service-card" data-delay="400">
-                    <h3>Business Growth Bundle</h3>
-                    <div class="price">PKR 200,000 - 500,000</div>
+                <a href="https://wa.me/923153387878?text=I'm interested in your Coding & Development Services!" class="service-card" data-delay="400" data-category="coding">
+                    <h3>Coding & Development</h3>
+                    <div class="price">PKR 50,000 - 300,000</div>
                     <ul>
-                        <li>Custom AI Assistant</li>
-                        <li>Complete Business Automation</li>
-                        <li>Data Analysis & Insights</li>
-                        <li>Multi-Language Support</li>
-                        <li>Priority Support</li>
-                        <li>12 Months Support</li>
+                        <li>Custom Web Applications</li>
+                        <li>E-commerce Stores</li>
+                        <li>Portfolio Websites</li>
+                        <li>API Development</li>
+                        <li>Interactive Games</li>
                     </ul>
-                </div>
+                </a>
+                
+                <a href="https://wa.me/923153387878?text=I'm interested in your Data & Analytics Services!" class="service-card" data-delay="600" data-category="data">
+                    <h3>Data & Analytics</h3>
+                    <div class="price">PKR 30,000 - 150,000</div>
+                    <ul>
+                        <li>Excel Automation</li>
+                        <li>Data Visualization Dashboards</li>
+                        <li>Sales Analytics</li>
+                        <li>Customer Analysis</li>
+                        <li>KPI Dashboards</li>
+                    </ul>
+                </a>
+                
+                <a href="https://wa.me/923153387878?text=I'm interested in your Automation & AI Services!" class="service-card" data-delay="800" data-category="automation">
+                    <h3>Automation & AI</h3>
+                    <div class="price">PKR 80,000 - 500,000</div>
+                    <ul>
+                        <li>Chatbots (WhatsApp, Facebook)</li>
+                        <li>Email Automation</li>
+                        <li>Social Media Scheduling</li>
+                        <li>Lead Generation Systems</li>
+                        <li>Workflow Automation</li>
+                    </ul>
+                </a>
+                
+                <a href="https://wa.me/923153387878?text=I'm interested in your Business Services!" class="service-card" data-delay="1000" data-category="business">
+                    <h3>Business Services</h3>
+                    <div class="price">PKR 50,000 - 200,000</div>
+                    <ul>
+                        <li>Business Plans</li>
+                        <li>Market Research</li>
+                        <li>Financial Projections</li>
+                        <li>Marketing Strategies</li>
+                        <li>SWOT Analysis</li>
+                    </ul>
+                </a>
+                
+                <a href="https://wa.me/923153387878?text=I'm interested in your Educational & Training Services!" class="service-card" data-delay="1200" data-category="education">
+                    <h3>Educational & Training</h3>
+                    <div class="price">PKR 30,000 - 150,000</div>
+                    <ul>
+                        <li>Course Creation</li>
+                        <li>Training Presentations</li>
+                        <li>Interactive Tutorials</li>
+                        <li>Quizzes & Tests</li>
+                        <li>Study Guides</li>
+                    </ul>
+                </a>
+                
+                <a href="https://wa.me/923153387878?text=I'm interested in your Creative Services!" class="service-card" data-delay="1400" data-category="creative">
+                    <h3>Creative Services</h3>
+                    <div class="price">PKR 20,000 - 100,000</div>
+                    <ul>
+                        <li>Creative Writing</li>
+                        <li>Video Scripts</li>
+                        <li>Podcast Scripts</li>
+                        <li>Storytelling for Brands</li>
+                        <li>Song Lyrics</li>
+                    </ul>
+                </a>
+                
+                <a href="https://wa.me/923153387878?text=I'm interested in your Technical Services!" class="service-card" data-delay="1600" data-category="technical">
+                    <h3>Technical Services</h3>
+                    <div class="price">PKR 50,000 - 250,000</div>
+                    <ul>
+                        <li>Software Documentation</li>
+                        <li>User Manuals</li>
+                        <li>API Documentation</li>
+                        <li>Technical Guides</li>
+                        <li>System Architecture</li>
+                    </ul>
+                </a>
+                
+                <a href="https://wa.me/923153387878?text=I'm interested in your Marketing & Sales Services!" class="service-card" data-delay="1800" data-category="marketing">
+                    <h3>Marketing & Sales</h3>
+                    <div class="price">PKR 30,000 - 200,000</div>
+                    <ul>
+                        <li>Sales Funnels</li>
+                        <li>Landing Page Copy</li>
+                        <li>Ad Copy & Scripts</li>
+                        <li>Email Sequences</li>
+                        <li>Referral Programs</li>
+                    </ul>
+                </a>
             </div>
         </div>
     </section>
@@ -579,115 +815,159 @@
         <div class="container">
             <h2>Ready to Automate Your Business?</h2>
             <p>Let's discuss how AI can transform your operations and boost your revenue</p>
-            
+            <p>Contact the admin directly to get started with our services!</p>
             <div class="contact-info">
-                <div class="contact-item">
+                <a href="https://wa.me/923153387878?text=Hi! I'm interested in AutoFlow Solutions services!" class="contact-item whatsapp">
                     <h4>WhatsApp</h4>
                     <p>+92 315 3387878</p>
-                </div>
+                </a>
                 
-                <div class="contact-item">
+                <a href="mailto:infoautoflowsolution@gmail.com" class="contact-item">
                     <h4>Email</h4>
-                    <p>infoautoflowsolutions@gmail.com</p>
-                </div>
+                    <p>infoautoflowsolution@gmail.com</p>
+                </a>
                 
                 <div class="contact-item">
                     <h4>Location</h4>
                     <p>Lahore, Punjab, Pakistan</p>
                 </div>
                 
-                <div class="contact-item">
+                <a href="https://www.instagram.com/AutoFlowSolutions" target="_blank" class="contact-item">
                     <h4>Social Media</h4>
                     <p>@AutoFlowSolutions</p>
-                </div>
+                </a>
             </div>
         </div>
     </section>
 
-    <a href="https://wa.me/923153387878" class="whatsapp-float" target="_blank">
+    <footer class="footer">
+        <div class="container">
+            <div class="logo-footer">AutoFlow Solutions</div>
+            <p>© 2025 AutoFlow Solutions. All rights reserved. | Founded by Muhammad Ibraheem</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/923153387878?text=Hi! I'm interested in AutoFlow Solutions services!" class="whatsapp-float" target="_blank">
         💬
     </a>
 
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
+        // Smooth scrolling function
+        function scrollToSection(sectionId) {
+            const target = document.getElementById(sectionId);
+            if (target) {
+                const headerOffset = 80;
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
                     behavior: 'smooth'
                 });
+            }
+        }
+
+        // Navigation links
+        document.querySelectorAll('.nav-link').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const sectionId = this.getAttribute('href').substring(1);
+                scrollToSection(sectionId);
             });
         });
 
-        // Scroll to top function
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
+        // Logo click
+        document.querySelector('.logo').addEventListener('click', () => {
+            scrollToSection('home');
+        });
 
-        // Add scroll effect to header
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const maxHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollProgress = (scrolled / maxHeight) * 100;
+            document.querySelector('.scroll-indicator').style.transform = `scaleX(${scrollProgress / 100})`;
+        });
+
+        // Header background on scroll
         window.addEventListener('scroll', function() {
             const header = document.querySelector('header');
             if (window.scrollY > 100) {
-                header.style.background = 'rgba(0,0,0,0.9)';
-                header.style.backdropFilter = 'blur(20px)';
+                header.style.background = 'rgba(0,0,0,0.95)';
+                header.style.backdropFilter = 'blur(30px)';
             } else {
-                header.style.background = 'rgba(0,0,0,0.3)';
-                header.style.backdropFilter = 'blur(10px)';
+                header.style.background = 'rgba(0,0,0,0.8)';
+                header.style.backdropFilter = 'blur(20px)';
             }
         });
 
-        // Animate service cards on scroll with staggered effect
+        // Animate service cards on scroll
         const observerOptions = {
             threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+            rootMargin: '0px 0px -100px 0px'
         };
 
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const delay = entry.target.getAttribute('data-delay') || 0;
+                    const card = entry.target;
+                    const delay = card.dataset.delay || 0;
+                    
                     setTimeout(() => {
-                        entry.target.classList.add('animate');
+                        card.classList.add('animate');
                     }, delay);
                 }
             });
         }, observerOptions);
 
+        // Observe all service cards
         document.querySelectorAll('.service-card').forEach(card => {
             observer.observe(card);
         });
 
-        // Parallax effect for sections
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const sections = document.querySelectorAll('.services, .about, .contact');
+        // Create floating particles
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 8 + 's';
+            particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            document.querySelector('.hero').appendChild(particle);
             
-            sections.forEach(section => {
-                const rate = scrolled * -0.5;
-                section.style.transform = `translateY(${rate}px)`;
-            });
-        });
-
-        // Add typing effect to hero text
-        const heroText = document.querySelector('.hero-content h1');
-        const originalText = heroText.textContent;
-        heroText.textContent = '';
-        
-        let i = 0;
-        function typeWriter() {
-            if (i < originalText.length) {
-                heroText.textContent += originalText.charAt(i);
-                i++;
-                setTimeout(typeWriter, 100);
-            }
+            setTimeout(() => {
+                particle.remove();
+            }, 8000);
         }
-        
-        // Start typing effect after page loads
-        window.addEventListener('load', function() {
-            setTimeout(typeWriter, 500);
+
+        // Create particles periodically
+        setInterval(createParticle, 300);
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const filter = this.dataset.filter;
+                
+                // Update active button
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Filter cards
+                document.querySelectorAll('.service-card').forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 100);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(60px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
         });
     </script>
 </body>
